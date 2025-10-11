@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#Arguments in bash script
 PERSON1=$1
 PERSON2=$2
 
