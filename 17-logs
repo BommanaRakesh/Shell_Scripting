@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#!/bin/bash
+
+# Color codes
+R="\e[31m"  # Red
+G="\e[32m"  # Green
+Y="\e[33m"  # Yellow
+N="\e[0m"   # Normal (reset)
+LOGS_FOLDER="/var/log/install_scripts"
+
+USERID=$(id -u)
+if [ "$USERID" -ne 0 ]; then
+  echo -e "${R}You must be root to run this script.${N}"
+  exit 1
+fi
+mkdir -p $LOGS_FOLDER
+
