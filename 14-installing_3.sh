@@ -6,7 +6,7 @@ then
   echo "You must be root to run this script."
     exit 1
 fi
-dnf install hmysql -y
+dnf install mysql -y
 if[ $? -ne 0 ];
 then
   echo "ERRor:MySQL installation failed."
