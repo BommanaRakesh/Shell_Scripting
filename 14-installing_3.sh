@@ -19,6 +19,6 @@ validate $? "MySQL"
 dnf install nginx -y
 validate $? "Nginx" 
 
-dnf install mangodb-mangosh -y
-validate $? "mangosh"
+dnf install python3 -y
+validate $? "python3"
 
