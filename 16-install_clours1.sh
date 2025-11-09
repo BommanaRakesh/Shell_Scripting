@@ -1,52 +1,59 @@
 #!/bin/bash
 
-R="\e[31m"
-G="\e[32m"
-Y="\e[33m"
-N="\e[0m"
+# Color codes
+R="\e[31m"  # Red
+G="\e[32m"  # Green
+Y="\e[33m"  # Yellow
+N="\e[0m"   # Normal (reset)
 
 USERID=$(id -u)
 if [ "$USERID" -ne 0 ]; then
-  echo "You must be root to run this script."
+  echo -e "${R}You must be root to run this script.${N}"
   exit 1
 fi
 
-# usage: validate <exit_code> <name>
+# usage: validate <exit_code> <package_name>
 validate() {
   if [ "$1" -ne 0 ]; then
-    echo "ERROR: $2 ... $R installation failed $N"
+    echo -e "${R}ERROR: $2 installation failed.${N}"
     exit 1
   else
-    echo "$2 ... $2 installed successfully $N"
+    echo -e "${G}$2 installed successfully.${N}"
   fi
 }
 
-# MySQL server (use 'mariadb-server' if 'mysql-server' isn't available)
-dnf list installed mysql
-#install if it is not found
+# -------------------------------
+# MySQL (use mariadb-server if mysql not found)
+# -------------------------------
+dnf list installed mysql &>/dev/null
 if [ $? -ne 0 ]; then
-  dnf install mysql -y
-  validate $? "MYSQL"
+  echo -e "${Y}Installing MySQL...${N}"
+  dnf install -y mysql
+  validate $? "MySQL"
 else
-  echo "MySQL server is already installed. $G Skipping $N"
+  echo -e "${G}MySQL is already installed. Skipping.${N}"
 fi
 
-dnf list installed nginx
-#install if it is not found
+# -------------------------------
+# NGINX
+# -------------------------------
+dnf list installed nginx &>/dev/null
 if [ $? -ne 0 ]; then 
-  dnf install nginx -y
+  echo -e "${Y}Installing Nginx...${N}"
+  dnf install -y nginx
   validate $? "Nginx"
 else
-  echo "Nginx is already installed. $G Skipping $N"
+  echo -e "${G}Nginx is already installed. Skipping.${N}"
 fi
 
-dnf list installed python3
-#install if it is not found
+# -------------------------------
+# PYTHON3
+# -------------------------------
+dnf list installed python3 &>/dev/null
 if [ $? -ne 0 ]; then 
-  dnf install python3 -y
+  echo -e "${Y}Installing Python 3...${N}"
+  dnf install -y python3
   validate $? "Python 3"
 else
-  echo "Python 3 is already installed. $G Skipping $N"
+  echo -e "${G}Python 3 is already installed. Skipping.${N}"
 fi
-
-  
