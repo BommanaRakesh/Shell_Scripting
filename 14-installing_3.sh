@@ -13,4 +13,4 @@ then
   exit 1
   else
 echo "MySQL installed successfully."
-
+fi
